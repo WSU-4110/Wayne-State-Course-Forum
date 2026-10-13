@@ -1,0 +1,5 @@
+Nickolas Yang Pg Notes 
+October 6th, 2026 
+
+what is pg?
+pg is a Node.js package that allows javascript to communicate with a PostgreSQL database...

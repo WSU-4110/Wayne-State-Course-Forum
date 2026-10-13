@@ -1,0 +1,37 @@
+Nickolas Yang Axios Notes 
+October 6th, 2026
+
+what is axios? 
+popular, promise-based JavaScript library used to make HTTP/HTTPS requests from both browser and Node.js environments
+
+axios is a javascript library for making HTTPS requests. obviously HTTPS is the protocol for web browser data transfer or whatever 
+browsers know how to make HTTPS requests automatically but we're using a javascript program to do it instead. so thats why we need axios 
+
+axios.get() sends an HTTP GET request to the URL that it is given back whatever response from the server 
+
+i asked chat gpt for a diagram thats relevant to our project
+Your JavaScript program
+        │
+        │ axios.get(URL)
+        │
+        ▼
+Sends HTTP GET request
+        │
+        ▼
+Wayne State's server
+        │
+        │ "Here's the page you requested"
+        ▼
+Sends HTTP response
+        │
+        ▼
+Axios receives it
+        │
+        ▼
+Your JavaScript program
+
+so axois.get(Wayne State URL) give us the Wayne State Course Page data 
+we then use response.data (sends back the html of page in a long html string)
+
+TLDR; axios allows us to use a URL in our program to retrieve it's data 
+this mostly sums up everything that the axios library will do for us in the project. 
