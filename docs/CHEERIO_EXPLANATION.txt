@@ -1,0 +1,34 @@
+Nickolas Yang Cheerio Notes 
+October 6th, 2026 
+
+what is cheerio?
+Cheerio is a JavaScript library used to parse and search HTML.
+
+now that we have the retrieved HTML from axios and response.data 
+cheerio can pull out information that we actually need such as course elements,text in certain headers or whatnot
+
+<!-- start text container -->
+<div id="textcontainer" class="page_content">
+
+<div class="sc_sccoursedescs">
+<div class="courseblock">
+<p class="courseblocktitle noindent"><strong>CSC 1000 Introduction to Computer Science Cr. 3</strong></p>
+<p class="courseblockdesc noindent">Provides an overview of current computing technology, organization, and use.  Topics surveyed include data representation and storage, hardware and software organization, communications technologies, ethical and security issues.  Provides hands-on training in common application software, such as word processing, spreadsheets, presentation, as well as in electronic telecommunications, such as e-mail, Internet and database searches.  The University database and Internet pages are emphasized.  Offered Fall, Winter. </p>
+<p class="courseblockextra noindent"><strong>Fees: </strong>$35</p>
+</div><div class="courseblock">
+
+above is the literal HTML from the Wayne State computer science course catalog page... 
+with cheerio we can essentially read each textcontainer in the courseblock class for its information and whatnot 
+
+so we now that we know we can extract individual strings of text all thats needed now is to seperate it into variables we 
+would use in javascript 
+for example 
+subject CSC
+courseNumber 1000
+courseName Introduction to Computer Science
+credits 3
+
+with this information we now know we can parse html with cheerio and all that is left is to seperate the strings with javascript.
+cheerio can also read specific attributes like href id src that are used for other websites. what this means is that we can create 
+the program to automatically scraping every other Wayne State department. 
+this is stuff to worry about after implementing it for just the computer science department though.
