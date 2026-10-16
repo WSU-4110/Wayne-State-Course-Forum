@@ -13,6 +13,7 @@ subject varchar (10) not null,
 course_number varchar(10) not null,
 course_name varchar(255) not null,
 prerequisites text, 
+credits INTEGER NOT NULL,
 created__at timestamp default current_timestamp,
 unique (subject, course_number)
 );
