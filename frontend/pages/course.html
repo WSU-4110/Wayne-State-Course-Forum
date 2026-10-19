@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course | WSU Course Forum</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <!-- Top bar: same as the home page (issue #9). -->
+  <header>
+    <a href="index.html">WSU Course Forum</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Log in</a>
+      <a href="signup.html">Sign up</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Course info. Step 2 fills these in from the link (course.html?course=CSC+4110). -->
+    <section id="course-info">
+      <h1 id="course-code">CSC 4110</h1>
+      <p id="course-name">Software Engineering</p>
+    </section>
+
+    <!-- Student posts. Ronald's posting + Amarda's database fill this list later. -->
+    <section id="posts">
+      <h2>What students say</h2>
+      <ul id="post-list">
+        <li>
+          <p>Example post: weekly team meetings, start the project early.</p>
+          <small>Posted by a student</small>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Shown only when the course isn't real. "hidden" keeps it off the screen for now. -->
+    <section id="not-found" hidden>
+      <h1>Course not found</h1>
+      <p>We couldn't find that course. Check the code and try again.</p>
+      <a href="index.html">Back to search</a>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made by WSU students for CSC 4110.</p>
+  </footer>
+
+  <!-- Step 2: fills in the course from the link. Lives in frontend/js/ like Kayla's signup.js. -->
+  <script src="../js/course.js"></script>
+
+</body>
+</html>
