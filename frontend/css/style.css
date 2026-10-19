@@ -1,0 +1,113 @@
+/* Shared styles for every page. WSU green and gold. */
+
+/* Colors in one place, so we can change them once */
+:root {
+  --green: #0c5449;
+  --gold: #ffcc33;
+  --light: #f4f6f5;
+  --text: #222222;
+}
+
+/* Whole page */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background-color: var(--light);
+}
+
+/* Top bar: site name on the left, links on the right */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 24px;
+  background-color: var(--green);
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+}
+
+header > a {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+nav a {
+  margin-left: 20px;
+}
+
+nav a:hover {
+  color: var(--gold);
+}
+
+/* Main content: centered, not too wide */
+main {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+h1 {
+  color: var(--green);
+}
+
+/* Home page search bar */
+form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #aaaaaa;
+  border-radius: 6px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--green);
+  background-color: var(--gold);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* Course page: each post is a white card */
+#post-list {
+  list-style: none;
+  padding: 0;
+}
+
+#post-list li {
+  background-color: white;
+  border-left: 4px solid var(--gold);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+}
+
+#post-list small {
+  color: #666666;
+}
+
+/* Bottom of the page */
+footer {
+  text-align: center;
+  padding: 24px;
+  color: #666666;
+}
