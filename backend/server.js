@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 // importing express and creating an instance called app
 const express = require("express");
@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // session middleware
+console.log("Session secret available:", !!process.env.SESSION_SECRET);
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -35,11 +36,15 @@ app.use(session({
     }
 }));
 
+//go into routes and import it 
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
+const courseRoutes = require('./routes/courses');
 
+//register routes
 app.use('/api/auth', authRoutes);
 app.use('/api', postRoutes);
+app.use('/api/courses', courseRoutes);
 
 
 app.listen(PORT, () => {

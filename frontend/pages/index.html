@@ -61,14 +61,55 @@
   <button type="submit">Search</button>
 </form>
 
+
 <script>
-  document.getElementById("course-search-form").addEventListener("submit", function () {
+const form = document.getElementById("course-search-form");
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    //get dropdown
     const subject = document.getElementById("subject").value;
     const number = document.getElementById("course-number").value.trim();
 
-    document.getElementById("course-search").value = subject + " " + number;
-  });
+    // build api request see courses.js in backend
+    const url = new URL(
+        "https://wayne-state-course-forum.onrender.com/api/courses/validate"
+    );
+
+    url.searchParams.set("subject", subject);
+    url.searchParams.set("number", number);
+
+    try {
+        // validates if exists
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Validation request failed");
+        }
+
+        const result = await response.json();
+
+        if (result.valid) {
+            // open if exist
+            const params = new URLSearchParams({
+                course: subject + " " + number
+            });
+
+            window.location.href = "course.html?" + params.toString();
+
+        } else {
+            // Course does not exist
+            alert("Course not found. Please check the course number.");
+        }
+
+    } catch (error) {
+        console.error("Validation error:", error);
+        alert("Unable to validate course. Please try again.");
+    }
+});
 </script>
+
 
   </main>
 
