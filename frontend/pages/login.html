@@ -4,44 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
     <title>Log In</title>
 </head>
 
 <body>
+    <header>
+        <a href="index.html">WSU Course Forum</a>
+    </header>
+    <main class = "auth-container">
+        <div = class = "auth-card">
+            <h1>Log In</h1>
 
-    <h1>Log In</h1>
+            <form id="loginForm">
 
-    <form action="/login" method="POST">
+                <label for="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                >
 
-        <label for="email">Email:</label>
-        <input
-            type="email"
-            id="email"
-            name="email"
-            required
-        >
+                <label for="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                >
 
-        <br><br>
+                <button type="submit">Log In</button>
 
-        <label for="password">Password:</label>
-        <input
-            type="password"
-            id="password"
-            name="password"
-            required
-        >
-
-        <br><br>
-
-        <button type="submit">Log In</button>
-
-    </form>
-
-    <p>
-        Don't have an account?
-        <a href="signup.html">Sign up</a>
-    </p>
-
+            </form>
+            <p>
+                Don't have an account?
+                <a href="signup.html">Sign up</a>
+                <p id="loginMessage" class="form-message" role="alert" aria-live="polite"></p>
+            </p>
+        </div>
+    </main>
+    <script src="../js/login.js"></script>
 </body>
 
 </html>

@@ -37,6 +37,38 @@ header > a {
   font-weight: bold;
 }
 
+header nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Logged-in account section */
+#userAccount {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Greeting text */
+#userGreeting {
+    color: white;
+    font-size: 16px;
+}
+
+/* Guest navigation links */
+#guestLinks {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Hide whichever section is not needed */
+#userAccount[hidden],
+#guestLinks[hidden] {
+    display: none;
+}
+
 nav a {
   margin-left: 20px;
 }
@@ -110,4 +142,80 @@ footer {
   text-align: center;
   padding: 24px;
   color: #666666;
+}
+
+/* signup and login pages */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.auth-card {
+    background-color: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card h1 {
+    color: var(--green);
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-card label {
+    font-weight: 600;
+}
+
+.auth-card input,
+.auth-card select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.auth-card button {
+    background-color: #f5d35b;
+    color: var(--green);
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.auth-card button:hover {
+    background-color: #e5c34b;
+}
+
+.auth-card p {
+    text-align: center;
+    margin-top: 24px;
+}
+
+/* signup and login error messages */
+.form-message {
+    color: #c62828;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    margin: 8px 0 0;
+}
+
+.form-message:empty {
+    display: none;
 }

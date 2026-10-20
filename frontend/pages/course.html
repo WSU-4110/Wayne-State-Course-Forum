@@ -12,9 +12,20 @@
   <header>
     <a href="index.html">WSU Course Forum</a>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="login.html">Log in</a>
-      <a href="signup.html">Sign up</a>
+      <!--when not logged in -->
+    
+      <span id="guestLinks" hidden>
+            <a href="index.html">Home</a>
+            <a href="login.html">Log in</a>
+            <a href="signup.html">Sign up</a>
+      </span>
+
+      <!--when logged in-->
+      <span id="userAccount" hidden>
+            <span id="userGreeting"></span>
+            <a href="index.html">Home</a>
+            <button id="logoutBtn" type="button">Log Out</button>
+      </span>
     </nav>
   </header>
 
@@ -52,6 +63,6 @@
 
   <!-- Step 2: fills in the course from the link. Lives in frontend/js/ like Kayla's signup.js. -->
   <script src="../js/course.js"></script>
-
+  <script src="../js/auth.js"></script>
 </body>
 </html>
