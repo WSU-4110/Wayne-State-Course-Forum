@@ -6,7 +6,7 @@ async function checkAuth() {
     const userGreeting = document.getElementById("userGreeting");
 
     try {
-        const response = await fetch("http://localhost:3000/api/auth/me", {
+        const response = await fetch("https://wayne-state-course-forum.onrender.com", {
             credentials: "include"
         });
 
@@ -37,7 +37,7 @@ checkAuth();
 // Log out the current student
 async function logout() {
     try {
-        const response = await fetch("http://localhost:3000/api/auth/logout", {
+        const response = await fetch("https://wayne-state-course-forum.onrender.com", {
             method: "POST",
             credentials: "include"
         });
