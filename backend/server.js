@@ -1,4 +1,4 @@
-
+const path = require("path");
 require('dotenv').config();
 
 // importing express and creating an instance called app
@@ -35,6 +35,22 @@ const postRoutes = require('./routes/posts');
 
 app.use('/api/auth', authRoutes);
 app.use('/api', postRoutes);
+
+// front end files
+app.use(express.static(
+    path.join(__dirname, "../frontend")
+));
+
+app.use(express.static(
+    path.join(__dirname, "../frontend/pages")
+));
+
+// index home
+app.get("/", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "../frontend/pages/index.html")
+    );
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
