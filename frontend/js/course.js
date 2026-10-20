@@ -17,6 +17,24 @@ if (courseCode === "") {
     document.getElementById("course-name").textContent = "Course name coming soon";
     document.title = courseCode + " | WSU Course Forum";
 
+async function loadCourseInfo() {
+    try {
+        const res = await fetch(`https://wayne-state-course-forum.onrender.com/api/courses/${encodeURIComponent(courseCode)}`);
+        if (res.ok) {
+            const course = await res.json();
+            document.getElementById("course-name").textContent = course.course_name;
+        } else {
+            document.getElementById("course-name").textContent = "Course detail not found";
+        }
+    } catch (err) {
+        console.error("Failed to load course info:", err);
+        document.getElementById("course-name").textContent = "Error loading course info";
+    }
+}
+
+
+
+
 
 // Load posts for the course
 async function loadPosts() {

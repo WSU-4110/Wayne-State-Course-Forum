@@ -3,6 +3,7 @@ const express = require("express"); // import express
 const router = express.Router(); // express router for organization
 
 const { validateCourses } = require("../scrapeCourses"); // importing validation functions from scrapeCourses.js
+const db = require("../db"); // Neon database connection
 
 ////GET request to /validate endpoint to use this function 
 router.get("/validate", async (req, res) => {
@@ -52,4 +53,28 @@ router.get("/validate", async (req, res) => {
     }
 });
 
+router.get("/:code", async (req, res) => {
+    try{
+        const courseCode = req.params.code.trim();
+        const parts = courseCode.split("/\s+/");
+        const subject = parts[0];
+        const courseNumber = parts.slice(1).join(" ");
+
+        const query = `
+            SELECT course_id, subject, course_number, course_name, credits
+            FROM courses
+            WHERE UPPER(subject) = UPPER($1) AND UPPER(course_number) = UPPER($2)
+            LIMIT 1
+        `;
+        const result = await db.query(query, [subject, courseNumber]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Course not found" });
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error("Failed to fetch course details:", error);
+        res.status(500).json({ error: "Failed to fetch course details" });
+    }
+});
 module.exports = router;
