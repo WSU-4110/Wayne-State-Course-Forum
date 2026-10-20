@@ -6,7 +6,7 @@ async function checkAuth() {
     const userGreeting = document.getElementById("userGreeting");
 
     try {
-        const response = await fetch("https://wayne-state-course-forum.onrender.com", {
+        const response = await fetch("https://wayne-state-course-forum.onrender.com/api/auth/me", {
             credentials: "include"
         });
 
@@ -24,10 +24,14 @@ async function checkAuth() {
             userAccount.hidden = true;
         } else {
             console.error("Authentication check returned:", response.status);
+            guestLinks.hidden = false;
+            userAccount.hidden = true;
         }
 
     } catch (error) {
         console.error("Authentication check failed:", error);
+        guestLinks.hidden = false;
+        userAccount.hidden = true;
     }
 }
 
@@ -37,7 +41,7 @@ checkAuth();
 // Log out the current student
 async function logout() {
     try {
-        const response = await fetch("https://wayne-state-course-forum.onrender.com", {
+        const response = await fetch("https://wayne-state-course-forum.onrender.com/api/auth/logout", {
             method: "POST",
             credentials: "include"
         });
