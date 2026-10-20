@@ -2,6 +2,10 @@
 const params = new URLSearchParams(window.location.search);
 const courseCode = (params.get("course") || "").trim().toUpperCase();
 
+// Get references to the post list and form elements
+const list = document.getElementById("post-list");
+const form = document.getElementById("post-form");
+
 if (courseCode === "") {
     // No course in the link: hide the course parts and show "Course not found"
     document.getElementById("course-info").hidden = true;
@@ -12,7 +16,7 @@ if (courseCode === "") {
     document.getElementById("course-code").textContent = courseCode;
     document.getElementById("course-name").textContent = "Course name coming soon";
     document.title = courseCode + " | WSU Course Forum";
-}
+
 
 // Load posts for the course
 async function loadPosts() {
@@ -32,23 +36,40 @@ async function loadPosts() {
     }
   }
 
-form.onsubmit = async (e) => {
-    e.preventDefault();
-    await fetch("https://wayne-state-course-forum.onrender.com/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        courseCode,
-        userId: 1,
-        title: form["post-title"].value,
-        tag: form["post-tag"].value,
-        content: form["post-content"].value
-      })
+if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById("post-title").value;
+      const tag = document.getElementById("post-tag").value;
+      const content = document.getElementById("post-content").value;
+
+      try {
+        const res = await fetch("https://wayne-state-course-forum.onrender.com/api/posts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            courseCode: courseCode,
+            userId: 1, // Fallback demo user ID
+            title: title,
+            tag: tag,
+            content: content
+          })
+        });
+
+        if (res.ok) {
+          form.reset();
+          await loadPosts();
+        } else {
+          const errData = await res.json();
+          alert("Error: " + (errData.error || "Could not save post"));
+        }
+      } catch (err) {
+        console.error("Submission failed:", err);
+      }
     });
-    form.reset();
-    loadPosts();
-  };
+  }
 
   loadPosts();
-
+}
 
