@@ -12,9 +12,20 @@
   <header>
     <a href="index.html">WSU Course Forum</a>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="login.html">Log in</a>
-      <a href="signup.html">Sign up</a>
+      <!--when not logged in -->
+    
+      <span id="guestLinks" hidden>
+            <a href="index.html">Home</a>
+            <a href="login.html">Log in</a>
+            <a href="signup.html">Sign up</a>
+      </span>
+
+      <!--when logged in-->
+      <span id="userAccount" hidden>
+            <span id="userGreeting"></span>
+            <a href="index.html">Home</a>
+            <button id="logoutBtn" type="button">Log Out</button>
+      </span>
     </nav>
   </header>
 
@@ -34,6 +45,6 @@
   <footer>
     <p>Made by WSU students for CSC 4110.</p>
   </footer>
-
+<script src="../js/auth.js"></script>
 </body>
 </html>
