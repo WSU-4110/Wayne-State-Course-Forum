@@ -34,12 +34,42 @@
     <h1>Find a WSU course</h1>
     <p>Read what other students say about workload, tips, and what to know before you take it.</p>
 
-    <!-- Search bar. Nick's search code will read the "course" value. -->
-    <form action="course.html" method="get">
-      <label for="course-search">Course code</label>
-      <input type="text" id="course-search" name="course" placeholder="e.g. CSC 4110" required>
-      <button type="submit">Search</button>
-    </form>
+  <!-- Search bar. Nick's search code will read the "course" value. -->
+  <form id="course-search-form" action="course.html" method="get">
+  <label for="subject">Subject</label>
+  <select id="subject" required>
+    <option value="">Select a subject</option>
+    <option value="CSC">CSC - Computer Science</option>
+    <option value="MAT">MAT - Mathematics</option>
+    <option value="BIO">BIO - Biology</option>
+    <option value="CHM">CHM - Chemistry</option>
+    <option value="PHY">PHY - Physics</option>
+  </select>
+
+  <label for="course-number">Course Number</label>
+  <input
+    type="text"
+    id="course-number"
+    placeholder="e.g. 4110"
+    inputmode="numeric"
+    pattern="[0-9]+"
+    required
+  >
+
+  <input type="hidden" id="course-search" name="course">
+
+  <button type="submit">Search</button>
+</form>
+
+<script>
+  document.getElementById("course-search-form").addEventListener("submit", function () {
+    const subject = document.getElementById("subject").value;
+    const number = document.getElementById("course-number").value.trim();
+
+    document.getElementById("course-search").value = subject + " " + number;
+  });
+</script>
+
   </main>
 
   <footer>
