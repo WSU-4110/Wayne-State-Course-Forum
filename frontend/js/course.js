@@ -17,7 +17,7 @@ if (courseCode === "") {
 // Load posts for the course
 async function loadPosts() {
     try {
-        const res = await fetch(`http://localhost:3000/api/posts?course=${encodeURIComponent(courseCode)}`, {
+        const res = await fetch(`"https://wayne-state-course-forum.onrender.com"/api/posts?course=${encodeURIComponent(courseCode)}`, {
         const posts = await res.json();
         list.innerHTML = posts.map(p => `
             <li style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; list-style: none;">
@@ -30,7 +30,7 @@ async function loadPosts() {
 
 form.onsubmit = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:3000/api/posts", {
+    await fetch("https://wayne-state-course-forum.onrender.com", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
