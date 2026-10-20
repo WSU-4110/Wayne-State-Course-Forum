@@ -32,6 +32,10 @@ async function loadCourseInfo() {
     }
 }
 
+
+
+
+
 // Load posts for the course
 async function loadPosts() {
     try {
@@ -85,6 +89,5 @@ if (form) {
   }
 
   loadPosts();
-  loadCourseInfo()
 }
 
