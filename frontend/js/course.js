@@ -89,5 +89,6 @@ if (form) {
   }
 
   loadPosts();
+  loadCourseInfo()
 }
 

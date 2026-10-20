@@ -56,7 +56,7 @@ router.get("/validate", async (req, res) => {
 router.get("/:code", async (req, res) => {
     try{
         const courseCode = req.params.code.trim();
-        const parts = courseCode.split("/\s+/");
+        const parts = courseCode.split(/\s+/);
         const subject = parts[0];
         const courseNumber = parts.slice(1).join(" ");
 
