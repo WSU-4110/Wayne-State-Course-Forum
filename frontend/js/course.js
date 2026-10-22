@@ -19,7 +19,7 @@ if (courseCode === "") {
 
 async function loadCourseInfo() {
     try {
-        const res = await fetch(`https://wayne-state-course-forum.onrender.com/api/courses/${encodeURIComponent(courseCode)}`);
+        const res = await fetch(`http://localhost:3000/api/courses/${encodeURIComponent(courseCode)}`); 
         if (res.ok) {
             const course = await res.json();
             document.getElementById("course-name").textContent = course.course_name;
@@ -63,12 +63,12 @@ if (form) {
       const content = document.getElementById("post-content").value;
 
       try {
-        const res = await fetch("https://wayne-state-course-forum.onrender.com/api/posts", {
+        const res = await fetch("http://localhost:3000/api/posts", {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             courseCode: courseCode,
-            userId: 1, // Fallback demo user ID
             title: title,
             tag: tag,
             content: content

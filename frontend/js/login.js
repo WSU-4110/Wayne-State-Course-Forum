@@ -20,7 +20,7 @@ loginForm.addEventListener("submit", async function(event) {
 
     // send login information to backend
     try {
-        const response = await fetch("https://wayne-state-course-forum.onrender.com", {
+        const response = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
