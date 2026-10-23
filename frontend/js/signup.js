@@ -26,7 +26,7 @@ signupForm.addEventListener("submit", async function(event) {
 
     // send signup information to backend
     try {
-        const response = await fetch("https://wayne-state-course-forum.onrender.com", {
+        const response = await fetch("https://wayne-state-course-forum.onrender.com/api/auth/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
