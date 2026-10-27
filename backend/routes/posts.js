@@ -45,7 +45,8 @@ router.get("/posts", async (req, res) => {
 
 // POST /posts
 router.post("/posts", async (req, res) => {
-  const { title, content, tag, courseCode, userId } = req.body;
+  const { title, content, tag, courseCode } = req.body;
+  const userId = req.session.userId;
   const parsed = parseCourseCode(courseCode);
 
   if (!parsed) {

@@ -65,10 +65,10 @@ if (form) {
       try {
         const res = await fetch("https://wayne-state-course-forum.onrender.com/api/posts", {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             courseCode: courseCode,
-            userId: 1, // Fallback demo user ID
             title: title,
             tag: tag,
             content: content
