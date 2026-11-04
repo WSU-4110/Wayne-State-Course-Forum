@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,110 +7,226 @@
   <title>WSU Course Forum</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
- 
-<!-- New Wayne State Course Forum Navigation -->
-<header class="site-header">
-  <div class="header-left">
-    <a href="index.html" class="site-brand">
-      <span class="brand-name">Wayne State University</span>
-      <span class="brand-subtitle">Course Forum</span>
-    </a>
+  <!-- Wayne State Course Forum Navigation -->
+  <header class="site-header">
+    <div class="header-left">
 
-    <nav class="main-navigation" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="search.html">Search Courses</a>
-      <a href="index.html#news">News</a>
+      <a href="index.html" class="site-brand">
+        <span class="brand-name">Wayne State University</span>
+        <span class="brand-subtitle">Course Forum</span>
+      </a>
+
+      <nav class="main-navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="search.html">Search Courses</a>
+        <a href="index.html#news">News</a>
+      </nav>
+
+    </div>
+
+    <nav class="account-navigation" aria-label="Account">
+
+      <!-- Visible when logged out -->
+      <span id="guestLinks">
+        <a href="login.html">Log In</a>
+        <a href="signup.html" class="signup-button">Sign Up</a>
+      </span>
+
+      <!-- Visible when logged in -->
+      <span id="userAccount" hidden>
+        <span id="userGreeting"></span>
+        <button id="logoutBtn" type="button">Log Out</button>
+      </span>
+
     </nav>
-  </div>
+  </header>
 
-  <nav class="account-navigation" aria-label="Account">
-    <!-- Visible when logged out -->
-    <span id="guestLinks">
-      <a href="login.html">Log In</a>
-      <a href="signup.html" class="signup-button">Sign Up</a>
-    </span>
 
-    <!-- Visible when logged in -->
-    <span id="userAccount" hidden>
-      <span id="userGreeting"></span>
-      <button id="logoutBtn" type="button">Log Out</button>
-    </span>
-  </nav>
-</header>
+  <!-- Homepage Content -->
+  <main class="homepage">
 
-<!-- New Homepage Content -->
-<main class="homepage">
+    <!-- Campus Photo Slideshow -->
+    <section class="hero-slideshow" aria-label="Wayne State campus photos">
 
-  <!-- Campus Photo Slideshow -->
-  <section class="hero-slideshow" aria-label="Wayne State campus photos">
+      <!-- Photo 1: Wayne State Shield -->
+      <div class="slide active">
+        <img
+          src="../images/campus1.jpeg"
+          alt="Wayne State University shield on campus">
+      </div>
 
-    <div class="slide active">
-      <img src="../images/campus1.jpg" alt="Wayne State University campus">
-    </div>
+      <!-- Photo 2: Modern Campus Building -->
+      <div class="slide">
+        <img
+          src="../images/campus2.jpeg"
+          alt="Modern Wayne State University campus building">
+      </div>
 
-    <div class="slide">
-      <img src="../images/campus2.jpg" alt="Students at Wayne State University">
-    </div>
+      <!-- Photo 3: Old Main Building -->
+      <div class="slide">
+        <img
+          src="../images/campus3.jpeg"
+          alt="Wayne State University Old Main building">
+      </div>
 
-    <div class="slide">
-      <img src="../images/campus3.jpg" alt="Wayne State campus buildings">
-    </div>
+      <!-- Photo 4: Students Walking -->
+      <div class="slide">
+        <img
+          src="../images/campus4.jpg"
+          alt="Students walking on Wayne State University campus">
+      </div>
 
-    <div class="slide">
-      <img src="../images/campus4.jpg" alt="Wayne State University campus life">
-    </div>
+      <!-- Photo 5: Warriors Sign -->
+      <div class="slide">
+        <img
+          src="../images/campus5.jpeg"
+          alt="Wayne State University Warriors sign">
+      </div>
 
-    <button class="slide-arrow previous" type="button" aria-label="Previous photo">&#10094;</button>
-    <button class="slide-arrow next" type="button" aria-label="Next photo">&#10095;</button>
 
-    <div class="hero-content">
-      <h1>Welcome to Wayne State Course Forum</h1>
-      <p>Connect with fellow Warriors, explore courses, and share your experiences.</p>
-      <a href="search.html" class="explore-button">Explore Courses</a>
-    </div>
+      <!-- Slideshow Navigation Arrows -->
+      <button
+        class="slide-arrow previous"
+        type="button"
+        aria-label="Previous photo">&#10094;</button>
 
-    <div class="slide-indicators" aria-label="Slideshow position">
-      <button class="indicator active" type="button" aria-label="Show photo 1"></button>
-      <button class="indicator" type="button" aria-label="Show photo 2"></button>
-      <button class="indicator" type="button" aria-label="Show photo 3"></button>
-      <button class="indicator" type="button" aria-label="Show photo 4"></button>
-    </div>
+      <button
+        class="slide-arrow next"
+        type="button"
+        aria-label="Next photo">&#10095;</button>
 
-  </section>
 
-  <!-- University News -->
-  <section id="news" class="university-news">
-    <h2>Latest Wayne State University News</h2>
-    <p>Stay connected with what's happening across campus.</p>
+      <!-- Welcome Message -->
+      <div class="hero-content">
+        <h1>Welcome to Wayne State Course Forum</h1>
 
-    <div class="news-grid">
-      <article class="news-card">
-        <h3>Campus News</h3>
-        <p>Explore the latest university announcements and student stories.</p>
-        <a href="https://today.wayne.edu/" target="_blank" rel="noopener noreferrer">Read Campus News</a>
-      </article>
+        <p>
+          Connect with fellow Warriors, explore courses,
+          and share your experiences.
+        </p>
 
-      <article class="news-card">
-        <h3>Research and Innovation</h3>
-        <p>Discover research, achievements, and new developments at Wayne State.</p>
-        <a href="https://today.wayne.edu/" target="_blank" rel="noopener noreferrer">Explore Research News</a>
-      </article>
+        <a href="search.html" class="explore-button">
+          Explore Courses
+        </a>
+      </div>
 
-      <article class="news-card">
-        <h3>University Events</h3>
-        <p>Find upcoming events and activities for the Wayne State community.</p>
-        <a href="https://events.wayne.edu/" target="_blank" rel="noopener noreferrer">View Events</a>
-      </article>
-    </div>
-  </section>
 
-</main>
+      <!-- Five Slideshow Indicators -->
+      <div class="slide-indicators" aria-label="Slideshow position">
 
+        <button
+          class="indicator active"
+          type="button"
+          aria-label="Show photo 1"></button>
+
+        <button
+          class="indicator"
+          type="button"
+          aria-label="Show photo 2"></button>
+
+        <button
+          class="indicator"
+          type="button"
+          aria-label="Show photo 3"></button>
+
+        <button
+          class="indicator"
+          type="button"
+          aria-label="Show photo 4"></button>
+
+        <button
+          class="indicator"
+          type="button"
+          aria-label="Show photo 5"></button>
+
+      </div>
+
+    </section>
+
+
+    <!-- University News Section -->
+    <section id="news" class="university-news">
+
+      <h2>Latest Wayne State University News</h2>
+
+      <p>
+        Stay connected with what's happening across campus.
+      </p>
+
+      <div class="news-grid">
+
+        <!-- Campus News -->
+        <article class="news-card">
+          <h3>Campus News</h3>
+
+          <p>
+            Explore the latest university announcements
+            and student stories.
+          </p>
+
+          <a
+            href="https://today.wayne.edu/"
+            target="_blank"
+            rel="noopener noreferrer">
+            Read Campus News
+          </a>
+        </article>
+
+
+        <!-- Research News -->
+        <article class="news-card">
+          <h3>Research and Innovation</h3>
+
+          <p>
+            Discover research, achievements, and new
+            developments at Wayne State.
+          </p>
+
+          <a
+            href="https://today.wayne.edu/"
+            target="_blank"
+            rel="noopener noreferrer">
+            Explore Research News
+          </a>
+        </article>
+
+
+        <!-- University Events -->
+        <article class="news-card">
+          <h3>University Events</h3>
+
+          <p>
+            Find upcoming events and activities for
+            the Wayne State community.
+          </p>
+
+          <a
+            href="https://events.wayne.edu/"
+            target="_blank"
+            rel="noopener noreferrer">
+            View Events
+          </a>
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
   <footer>
     <p>Made by WSU students for CSC 4110.</p>
   </footer>
-<script src="../js/auth.js"></script>
+
+
+  <!-- JavaScript Files -->
+  <script src="../js/auth.js"></script>
+  <script src="../js/slideshow.js"></script>
+
 </body>
 </html>
