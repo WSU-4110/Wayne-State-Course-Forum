@@ -39,89 +39,73 @@
   </nav>
 </header>
 
-  <!-- Main part of the page -->
-  <main>
-    <h1>Find a WSU course</h1>
-    <p>Read what other students say about workload, tips, and what to know before you take it.</p>
+<!-- New Homepage Content -->
+<main class="homepage">
 
-  <!-- Search bar. Nick's search code will read the "course" value. -->
-  <form id="course-search-form" action="course.html" method="get">
-  <label for="subject">Subject</label>
-  <select id="subject" required>
-    <option value="">Select a subject</option>
-    <option value="CSC">CSC - Computer Science</option>
-    <option value="MAT">MAT - Mathematics</option>
-    <option value="BIO">BIO - Biology</option>
-    <option value="CHM">CHM - Chemistry</option>
-    <option value="PHY">PHY - Physics</option>
-  </select>
+  <!-- Campus Photo Slideshow -->
+  <section class="hero-slideshow" aria-label="Wayne State campus photos">
 
-  <label for="course-number">Course Number</label>
-  <input
-    type="text"
-    id="course-number"
-    placeholder="e.g. 4110"
-    inputmode="numeric"
-    pattern="[0-9]+"
-    required
-  >
+    <div class="slide active">
+      <img src="../images/campus1.jpg" alt="Wayne State University campus">
+    </div>
 
-  <input type="hidden" id="course-search" name="course">
+    <div class="slide">
+      <img src="../images/campus2.jpg" alt="Students at Wayne State University">
+    </div>
 
-  <button type="submit">Search</button>
-</form>
+    <div class="slide">
+      <img src="../images/campus3.jpg" alt="Wayne State campus buildings">
+    </div>
 
+    <div class="slide">
+      <img src="../images/campus4.jpg" alt="Wayne State University campus life">
+    </div>
 
-<script>
-const form = document.getElementById("course-search-form");
+    <button class="slide-arrow previous" type="button" aria-label="Previous photo">&#10094;</button>
+    <button class="slide-arrow next" type="button" aria-label="Next photo">&#10095;</button>
 
-form.addEventListener("submit", async function(event) {
-    event.preventDefault();
+    <div class="hero-content">
+      <h1>Welcome to Wayne State Course Forum</h1>
+      <p>Connect with fellow Warriors, explore courses, and share your experiences.</p>
+      <a href="search.html" class="explore-button">Explore Courses</a>
+    </div>
 
-    //get dropdown
-    const subject = document.getElementById("subject").value;
-    const number = document.getElementById("course-number").value.trim();
+    <div class="slide-indicators" aria-label="Slideshow position">
+      <button class="indicator active" type="button" aria-label="Show photo 1"></button>
+      <button class="indicator" type="button" aria-label="Show photo 2"></button>
+      <button class="indicator" type="button" aria-label="Show photo 3"></button>
+      <button class="indicator" type="button" aria-label="Show photo 4"></button>
+    </div>
 
-    // build api request see courses.js in backend
-    const url = new URL(
-        "https://wayne-state-course-forum.onrender.com/api/courses/validate"
-    );
+  </section>
 
-    url.searchParams.set("subject", subject);
-    url.searchParams.set("number", number);
+  <!-- University News -->
+  <section id="news" class="university-news">
+    <h2>Latest Wayne State University News</h2>
+    <p>Stay connected with what's happening across campus.</p>
 
-    try {
-        // validates if exists
-        const response = await fetch(url);
+    <div class="news-grid">
+      <article class="news-card">
+        <h3>Campus News</h3>
+        <p>Explore the latest university announcements and student stories.</p>
+        <a href="https://today.wayne.edu/" target="_blank" rel="noopener noreferrer">Read Campus News</a>
+      </article>
 
-        if (!response.ok) {
-            throw new Error("Validation request failed");
-        }
+      <article class="news-card">
+        <h3>Research and Innovation</h3>
+        <p>Discover research, achievements, and new developments at Wayne State.</p>
+        <a href="https://today.wayne.edu/" target="_blank" rel="noopener noreferrer">Explore Research News</a>
+      </article>
 
-        const result = await response.json();
+      <article class="news-card">
+        <h3>University Events</h3>
+        <p>Find upcoming events and activities for the Wayne State community.</p>
+        <a href="https://events.wayne.edu/" target="_blank" rel="noopener noreferrer">View Events</a>
+      </article>
+    </div>
+  </section>
 
-        if (result.valid) {
-            // open if exist
-            const params = new URLSearchParams({
-                course: subject + " " + number
-            });
-
-            window.location.href = "course.html?" + params.toString();
-
-        } else {
-            // Course does not exist
-            alert("Course not found. Please check the course number.");
-        }
-
-    } catch (error) {
-        console.error("Validation error:", error);
-        alert("Unable to validate course. Please try again.");
-    }
-});
-</script>
-
-
-  </main>
+</main>
 
   <footer>
     <p>Made by WSU students for CSC 4110.</p>
