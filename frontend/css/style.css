@@ -219,3 +219,103 @@ footer {
 .form-message:empty {
     display: none;
 }
+
+
+/* homepage redisign navigation */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 18px 32px;
+  background-color: #0c5449;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 36px;
+}
+
+.site-brand {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: white;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: bold;
+  color: white;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: #ffcc33;
+  letter-spacing: 1px;
+}
+
+.main-navigation,
+.account-navigation,
+#guestLinks,
+#userAccount {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.site-header a {
+  color: white;
+  text-decoration: none;
+}
+
+.site-header a:hover {
+  color: #ffcc33;
+}
+
+.account-navigation {
+  margin-left: auto;
+}
+
+.signup-button {
+  background-color: #ffcc33;
+  color: #0c5449 !important;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.signup-button:hover {
+  background-color: #e6b800;
+}
+
+#userAccount[hidden],
+#guestLinks[hidden] {
+  display: none;
+}
+
+#userGreeting {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .site-header,
+  .header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .main-navigation {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .account-navigation {
+    margin-left: 0;
+  }
+}
+
