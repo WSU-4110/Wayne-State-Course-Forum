@@ -32,9 +32,11 @@ app.use(session({
 
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
+const profileRoutes = require("./routes/profile_route");
 
 app.use('/api/auth', authRoutes);
 app.use('/api', postRoutes);
+app.use("/api/profile", profileRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
