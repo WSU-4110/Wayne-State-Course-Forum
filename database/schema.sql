@@ -13,8 +13,8 @@ subject varchar (10) not null,
 course_number varchar(10) not null,
 course_name varchar(255) not null,
 prerequisites text, 
-credits INTEGER NOT NULL,
-created__at timestamp default current_timestamp,
+credits TEXT NOT NULL,
+created_at timestamp default current_timestamp,
 unique (subject, course_number)
 );
 
@@ -41,5 +41,7 @@ created_at timestamp default current_timestamp,
 updated_at timestamp default current_timestamp,
 foreign key (post_id) references posts(post_id),
 foreign key (user_id) references users(user_id),
-foreign key (reply_comment_id) references comments(comment_id)
+unique (comment_id, post_id),
+foreign key (reply_comment_id, post_id)
+    references comments(comment_id, post_id)
 )
