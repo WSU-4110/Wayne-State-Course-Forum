@@ -219,3 +219,297 @@ footer {
 .form-message:empty {
     display: none;
 }
+
+
+/* homepage redisign navigation */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 18px 32px;
+  background-color: #0c5449;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 36px;
+}
+
+.site-brand {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: white;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: bold;
+  color: white;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: #ffcc33;
+  letter-spacing: 1px;
+}
+
+.main-navigation,
+.account-navigation,
+#guestLinks,
+#userAccount {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.site-header a {
+  color: white;
+  text-decoration: none;
+}
+
+.site-header a:hover {
+  color: #ffcc33;
+}
+
+.account-navigation {
+  margin-left: auto;
+}
+
+.signup-button {
+  background-color: #ffcc33;
+  color: #0c5449 !important;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.signup-button:hover {
+  background-color: #e6b800;
+}
+
+#userAccount[hidden],
+#guestLinks[hidden] {
+  display: none;
+}
+
+#userGreeting {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .site-header,
+  .header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .main-navigation {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .account-navigation {
+    margin-left: 0;
+  }
+}
+
+
+/* =====================================
+   HOMEPAGE - CAMPUS SLIDESHOW
+   ===================================== */
+
+.homepage {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-slideshow {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+  background-color: #0c5449;
+}
+
+.hero-slideshow .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.hero-slideshow .slide.active {
+  opacity: 1;
+}
+
+.hero-slideshow .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark overlay to make text readable */
+.hero-slideshow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Welcome message */
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  color: white;
+}
+
+.hero-content h1 {
+  font-size: clamp(28px, 4vw, 48px);
+  margin-bottom: 18px;
+  color: white;
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: white;
+}
+
+/* Explore Courses button */
+.explore-button {
+  display: inline-block;
+  background-color: #ffcc33;
+  color: #0c5449;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.explore-button:hover {
+  background-color: #e6b800;
+}
+
+/* Slideshow arrows */
+.slide-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.slide-arrow.previous {
+  left: 20px;
+}
+
+.slide-arrow.next {
+  right: 20px;
+}
+
+.slide-arrow:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* Slideshow indicators */
+.slide-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 10px;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.indicator.active {
+  background: #ffcc33;
+}
+
+/* homepage university news */
+.university-news {
+  padding: 60px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.university-news h2 {
+  color: #0c5449;
+  font-size: 30px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.news-card {
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.news-card h3 {
+  color: #0c5449;
+}
+
+.news-card a {
+  color: #0c5449;
+  font-weight: bold;
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .hero-slideshow {
+    height: 440px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .university-news {
+    padding: 40px 20px;
+  }
+}
