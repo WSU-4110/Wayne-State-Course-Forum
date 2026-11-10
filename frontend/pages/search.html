@@ -8,26 +8,40 @@
 </head>
 <body>
 
-  <!-- Top bar: site name + links. Same on every page (issue #9). -->
-  <header>
-    <a href="index.html">WSU Course Forum</a>
-    <nav>
-      <!--when not logged in -->
-    
-      <span id="guestLinks">
-            <a href="index.html">Home</a>
-            <a href="login.html">Log in</a>
-            <a href="signup.html">Sign up</a>
-      </span>
+  
+<!-- Wayne State Course Forum Navigation -->
+<header class="site-header">
+  <div class="header-left">
 
-      <!--when logged in-->
-      <span id="userAccount" hidden>
-            <span id="userGreeting"></span>
-            <a href="index.html">Home</a>
-            <button id="logoutBtn" type="button">Log Out</button>
-      </span>
+    <a href="index.html" class="site-brand">
+      <span class="brand-name">Wayne State University</span>
+      <span class="brand-subtitle">Course Forum</span>
+    </a>
+
+    <nav class="main-navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="search.html">Search Courses</a>
+      <a href="index.html#news">News</a>
     </nav>
-  </header>
+
+  </div>
+
+  <nav class="account-navigation" aria-label="Account">
+
+    <!-- Visible when logged out -->
+    <span id="guestLinks">
+      <a href="login.html">Log In</a>
+      <a href="signup.html" class="signup-button">Sign Up</a>
+    </span>
+
+    <!-- Visible when logged in -->
+    <span id="userAccount" hidden>
+      <span id="userGreeting"></span>
+      <button id="logoutBtn" type="button">Log Out</button>
+    </span>
+
+  </nav>
+</header>
 
   <!-- Main part of the page -->
   <main>
