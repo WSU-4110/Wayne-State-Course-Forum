@@ -49,13 +49,22 @@ router.post("/posts", async (req, res) => {
   const userId = req.session.userId;
   const parsed = parseCourseCode(courseCode);
 
+  // Only logged-in users can create posts
+if (!userId) {
+  return res.status(401).json({
+    error: "You must be logged in to create a post."
+  });
+}
+
   if (!parsed) {
     return res.status(400).json({ error: "A valid course code is required." });
   }
 
-  if (!title || !content || !tag || !userId) {
-    return res.status(400).json({ error: "title, content, tag, and userId are required." });
-  }
+  if (!title || !content || !tag) {
+  return res.status(400).json({
+    error: "Title, content, and tag are required."
+  });
+}
 
   try {
     const courseLookup = await db.query(
