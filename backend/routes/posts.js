@@ -31,7 +31,6 @@ router.get("/posts", async (req, res) => {
         p.created_at,
         p.updated_at,
         u.email AS author_email
-
       FROM posts p
       JOIN courses c ON p.course_id = c.course_id
       JOIN users u ON p.user_id = u.user_id
