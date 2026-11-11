@@ -24,11 +24,14 @@ router.get("/posts", async (req, res) => {
     const query = `
       SELECT
         p.post_id,
+        p.user_id,
         p.title,
         p.content,
         p.tag,
         p.created_at,
+        p.updated_at,
         u.email AS author_email
+
       FROM posts p
       JOIN courses c ON p.course_id = c.course_id
       JOIN users u ON p.user_id = u.user_id
@@ -93,3 +96,44 @@ if (!userId) {
 });
 
 module.exports = router;
+
+// PATCH /posts/:id
+router.patch("/posts/:id", async (req, res) => {
+  const postId = req.params.id;
+  const { title, content, tag } = req.body;
+  const userId = req.session.userId;
+
+  if (!userId) {
+    return res.status(401).json({ error: "You must be logged in to edit a post." });
+  }
+
+  if (!title?.trim() || !content?.trim() || !tag?.trim()) {
+    return res.status(400).json({ error: "Title, content, and tag are required." });
+  }
+
+  try {
+    const updateQuery = `
+      UPDATE posts
+      SET title = $1, content = $2, tag = $3, updated_at = CURRENT_TIMESTAMP
+      WHERE post_id = $4 AND user_id = $5
+      RETURNING *;
+    `;
+
+    const result = await db.query(updateQuery, [
+      title.trim(),
+      content.trim(),
+      tag.trim(),
+      postId,
+      userId
+    ]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Post not found or you do not have permission to edit it." });
+    }
+
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
