@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Verify Email</title>
+</head>
+
+<body>
+    <header>
+        <a href="index.html">WSU Course Forum</a>
+    </header>
+    <main>
+        <h1>Verify Your Email</h1>
+
+        <p>
+            Enter the 6-digit verification code sent to your
+            Wayne State email address.
+        </p>
+
+        <p>
+            Email: <span id="verificationEmail"></span>
+        </p>
+                <form id="verifyEmailForm">
+            <label for="verificationCode">
+                Verification Code
+            </label>
+
+            <input
+                type="text"
+                id="verificationCode"
+                name="code"
+                placeholder="Enter 6-digit code"
+                maxlength="6"
+                inputmode="numeric"
+                pattern="[0-9]{6}"
+                autocomplete="one-time-code"
+                required
+            >
+
+            <button type="submit">
+                Verify Email
+            </button>
+        </form>
+
+        <p id="verificationMessage" role="status" aria-live="polite"></p>
+
+        <p>
+            Didn't receive a code?
+            <button type="button" id="resendCodeButton">
+                Resend Code
+            </button>
+        </p>
+
+        <p>
+            <a href="login.html">Back to Login</a>
+        </p>
+    </main>
+    <script src="../js/verify_email.js"></script>
+</body>
+
+</html>

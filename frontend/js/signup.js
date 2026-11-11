@@ -43,7 +43,7 @@ signupForm.addEventListener("submit", async function(event) {
         // get backend response
         const data = await response.json();
         if (response.ok) {
-            window.location.href = "index.html";
+            window.location.href = `verify_email.html?email=${encodeURIComponent(data.email)}`;
         } else {
             signupMessage.textContent = data.message || "Could not create account.";
         }
