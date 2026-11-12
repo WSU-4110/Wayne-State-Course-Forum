@@ -11,6 +11,46 @@ function parseCourseCode(courseCode) {
   return { subject: match[1].toUpperCase(), courseNumber: match[2] };
 }
 
+
+//GET /recent-courses
+router.get("/recent-courses", async(req, res) => {
+  try {
+    const query = `
+    SELECT 
+      recent.subject,
+      recent.course_number,
+      recent.course_name,
+      recent.title,
+      recent.content,
+      recent.created_at
+    FROM (
+      SELECT DISTINCT ON (p.course_id)
+        c.subject,
+        c.course_number,
+           c.course_name,
+           p.title,
+           p.content,
+           p.created_at,
+           p.post_id
+         FROM posts p
+         JOIN courses c ON p.course_id = c.course_id
+         ORDER BY p.course_id, p.created_at DESC, p.post_id DESC
+       ) AS recent
+       ORDER BY recent.created_at DESC, recent.post_id DESC
+       LIMIT 3
+     `;
+     
+     const result = await db.query(query);
+     res.status(200).json(result.rows);
+  }
+  catch(error) { 
+    console.error("Error fetching courses: ", error); 
+    res.status(500).json({
+      error: "Failed to retrieve recently active courses"
+    });
+  }
+})
+
 // GET /posts?course=CSC+4110
 router.get("/posts", async (req, res) => {
   const courseCode = req.query.course;
