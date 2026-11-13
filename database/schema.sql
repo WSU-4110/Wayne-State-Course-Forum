@@ -4,7 +4,8 @@ email varchar(255) unique not null,
 password_hash varchar(255) not null,
 major varchar(100),
 year varchar(50),
-created_at timestamp default current_timestamp
+created_at timestamp default current_timestamp,
+email_verified BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 create table courses(
@@ -41,6 +42,16 @@ created_at timestamp default current_timestamp,
 updated_at timestamp default current_timestamp,
 foreign key (post_id) references posts(post_id),
 foreign key (user_id) references users(user_id),
+foreign key (reply_comment_id) references comments(comment_id)
+);
+
+create table email_verification_codes(
+    user_id integer primary key references users(user_id) on delete cascade,
+    code_hash text not null,
+    expires_at TIMESTAMPTZ not null,
+    attempts integer not null default 0,
+    created_at TIMESTAMPTZ not null default NOW()
+);
 unique (comment_id, post_id),
 foreign key (reply_comment_id, post_id)
     references comments(comment_id, post_id)

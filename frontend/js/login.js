@@ -35,8 +35,12 @@ loginForm.addEventListener("submit", async function(event) {
         // read backend response 
         const data = await response.json();
         if (response.ok){
-            window.location.href = "index.html";
-        } else {
+            window.location.href = "index.html"; //verified user goes to homepage
+        } else if (response.status === 403 && data.requiresVerification){
+            // redirect unverfied users to the verification page
+            window.location.href = `verify_email.html?email=${encodeURIComponent(data.email)}`;
+        }
+        else {
             loginMessage.textContent = data.message || "Login failed.";
         }
 
