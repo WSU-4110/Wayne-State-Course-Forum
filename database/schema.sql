@@ -14,8 +14,8 @@ subject varchar (10) not null,
 course_number varchar(10) not null,
 course_name varchar(255) not null,
 prerequisites text, 
-credits INTEGER NOT NULL,
-created__at timestamp default current_timestamp,
+credits TEXT NOT NULL,
+created_at timestamp default current_timestamp,
 unique (subject, course_number)
 );
 
@@ -52,3 +52,7 @@ create table email_verification_codes(
     attempts integer not null default 0,
     created_at TIMESTAMPTZ not null default NOW()
 );
+unique (comment_id, post_id),
+foreign key (reply_comment_id, post_id)
+    references comments(comment_id, post_id)
+)

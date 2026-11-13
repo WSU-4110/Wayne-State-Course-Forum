@@ -39,6 +39,26 @@
 
     <!-- Student posts. Ronald's posting + Amarda's database fill this list later. -->
     <section id="posts">
+      <div id="create-post-box" style="margin-bottom: 24px; padding: 16px; border: 1px solid #ccc; border-radius: 8px;">
+        <h3>Share your experience</h3>
+        <form id="post-form">
+          <div style="margin-bottom: 12px;">
+            <label for="post-title">Post title:</label>
+            <input type="text" id="post-title" placeholder="e.g. Tips for midterm 1" required style="width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box;">
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <label for="post-tag">Post tag:</label>
+            <input type="text" id="post-tag" placeholder="e.g. Study Tips" required style="width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box;">
+          </div>
+          <div style="margin-bottom: 12px;">
+            <label for="post-content">Post content:</label>
+            <textarea id="post-content" rows="4" placeholder="e.g. Weekly team meetings, start the project early." required style="width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box;"></textarea>
+          </div>
+
+          <button type="submit">Create Post</button>
+        </form>   
+        </div>
       <h2>What students say</h2>
       <ul id="post-list">
         <li>

@@ -1,6 +1,6 @@
 /*
 Name: Nickolas Yang 
-Date: October 6th, 2026 
+Last Updated Date: October 20th, 2026 
 File Name: scrapeCourses.js
 File Description: This javascript file contains script to receive, parse, and extract course data the Wayne State Course Forum
 needs to validate if courses are real or not.
@@ -9,12 +9,12 @@ needs to validate if courses are real or not.
 
 const axios = require("axios");
 const cheerio = require("cheerio");
-const {Pool} = require("./db"); //USING LOCAL DATABASE ESTABLISHED IN db.js 
+const pool = require("./db"); //USING NEON DATABASE ESTABLISHED IN db.js 
 //above is just importing everything needed...
 
 
-async function scrapeCourses(subjectAbbrev) {
-    const subjectAbbrev = subjectAbbrev.trim().toUpperCase();
+async function scrapeCourses(subject) {
+    const subjectAbbrev = subject.trim().toUpperCase();
     const url = `https://bulletins.wayne.edu/courses/${subjectAbbrev.toLowerCase()}/`; // luckily the wayne state bulletins has good organization to search classes
     const response = await axios.get(url); //axios sends an HTTPS GET request to specific URL and gets the HTML data in variable response 
     const $ = cheerio.load(response.data); //cheerio puts the response data into a parsable format and we're storing that into $
@@ -52,7 +52,7 @@ async function scrapeCourses(subjectAbbrev) {
 
     // in event that the given subjectAbbrev given didnt have a corresponding subject
     if (courses.length === 0) {
-        throw new Error(`No courses were found for ${subjectCode}`);
+        throw new Error(`No courses were found for ${subjectAbbrev}`);
     }
 
     // connect to postgresql
@@ -62,19 +62,31 @@ async function scrapeCourses(subjectAbbrev) {
         await client.query("BEGIN");
 
         // insert each course
-        for (const course of courses) {
-            await client.query(
-                `INSERT INTO courses (subject, course_number, course_name)
-                 VALUES ($1, $2, $3)
-                 ON CONFLICT (subject, course_number)
-                 DO UPDATE SET course_name = EXCLUDED.course_name`,
-                [
-                    course.subject,
-                    course.courseNumber,
-                    course.courseTitle
-                ]
-            );
-        }
+       for (const course of courses) {
+   
+
+    const credits = course.credits?.trim();// ex: credits 1-5 3-17
+    if (!credits) {
+        throw new Error(`Invalid credits for ${course.subject} ${course.courseNumber}`); // have to do this because how credits are displayed in course bulletin ugh
+    }
+
+
+    await client.query(
+        `INSERT INTO courses
+        (subject, course_number, course_name, credits)
+        VALUES ($1, $2, $3, $4)
+        ON CONFLICT (subject, course_number)
+        DO UPDATE SET
+            course_name = EXCLUDED.course_name,
+            credits = EXCLUDED.credits`,
+        [
+            course.subject,
+            course.courseNumber,
+            course.courseTitle,
+            credits
+        ]
+    );
+}
 
         await client.query("COMMIT");
     } catch (error) {
@@ -84,7 +96,7 @@ async function scrapeCourses(subjectAbbrev) {
         client.release();
     }
 
-    console.log(`Successfully stored ${courses.length} ${subjectCode} courses`);
+    console.log(`Successfully stored ${courses.length} ${subjectAbbrev} courses`);
 
     return courses;
 }
@@ -113,4 +125,9 @@ async function validateCourses(subject, inputCourse) {
     );
 }
 
+
+module.exports = {
+    scrapeCourses,
+    validateCourses
+}; // allows other backend files to access these functions as well
 
