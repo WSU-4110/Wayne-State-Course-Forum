@@ -26,7 +26,7 @@ verifyEmailForm.addEventListener("submit", async function(event){
     }
     // send info to backend
     try{
-        const response = await fetch("http://localhost:3000/api/auth/verify-email",{
+        const response = await fetch("https://wayne-state-course-forum.onrender.com/api/auth/verify-email", {
             method: "POST",
             headers:{
                 "Content-Type": "application/json"
@@ -58,13 +58,13 @@ function startResendCooldown(seconds){
     clearInterval(cooldownTimer);
     let remaining = seconds;
 
-    resendCodeButton.disable = true;
+    resendCodeButton.disabled = true;
     resendCodeButton.textContent = `Resend Code(${remaining}s)`;
     cooldownTimer = setInterval(() => {
         remaining--;
         if (remaining <= 0){
             clearInterval(cooldownTimer);
-            resendCodeButton.disable = false;
+            resendCodeButton.disabled = false;
             resendCodeButton.textContent = "Resend Code";
 
         } else{
@@ -83,7 +83,7 @@ resendCodeButton.addEventListener("click", async () =>{
 
     try{
         const response = await fetch(
-            "http://localhost:3000/api/auth/resend-verification",
+            "https://wayne-state-course-forum.onrender.com/api/auth/resend-verification",
             {
                 method: "POST",
                 headers: {
