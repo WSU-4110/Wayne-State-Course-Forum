@@ -5,6 +5,34 @@ const router = express.Router(); // express router for organization
 const { validateCourses } = require("../scrapeCourses"); // importing validation functions from scrapeCourses.js
 const db = require("../db"); // Neon database connection
 
+let storedSubjects = []
+let lastFetched = 0; 
+
+// GET to /api/courses/subjects
+router.get("/subjects", async (req, res) => {
+    try { 
+        const result = await db.query ( 
+            `SELECT DISTINCT subject
+            FROM courses
+            ORDER BY subject`
+        );
+        res.json(result.rows);
+    }
+
+    catch (error) {
+        console.error("Failed to fetch subjects:", error); 
+        
+        res.status(500).json({
+            error: "Failed to fetch subjects"
+        });
+    }
+})
+
+
+
+
+
+
 ////GET request to /validate endpoint to use this function 
 router.get("/validate", async (req, res) => {
     const { subject, number } = req.query; // get subject and course number from database
@@ -21,15 +49,14 @@ router.get("/validate", async (req, res) => {
     const courseNumber = number.trim();
     //clean inputs
 
-    //only allow certain subjects THIS IS TEMPORARY JUST FOR SPRINT 1
-    const allowedSubjects = ["CSC", "MAT", "BIO", "CHM", "PHY"];
 
-    if (!allowedSubjects.includes(subjectAbbr) ||
-        !/^\d{4}$/.test(courseNumber)) {
-        return res.status(400).json({
-            error: "Invalid subject or course number format"
-        });
-    }
+    // Accept any alphabetic subject abbreviation (2-5 letters)
+if (!/^[A-Z]{2,5}$/.test(subjectAbbr) ||
+    !/^\d{4}$/.test(courseNumber)) {
+    return res.status(400).json({
+        error: "Invalid subject or course number format"
+    });
+}
 
     //call validation function js waites till finished
     try {

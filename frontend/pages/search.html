@@ -46,6 +46,16 @@
     <option value="PHY">PHY - Physics</option>
   </select>
 
+  <input 
+    type = "text"
+    id = "custom-subject"
+    placeholder = "Enter subject code (e.g. CSC)"
+    maxlength = "3"
+    pattern = "[A-Za-z]{2,3}"
+    hidden
+    >
+
+
   <label for="course-number">Course Number</label>
   <input
     type="text"
@@ -64,12 +74,29 @@
 
 <script>
 const form = document.getElementById("course-search-form");
+const subjectSelect = document.getElementById("subject");
+const customSubject = document.getElementById("custom-subject");
+
+subjectSelect.addEventListener("change", function() {
+    const isOther = subjectSelect.value === "OTHER";
+
+    customSubject.hidden = !isOther;
+    customSubject.required = isOther;
+
+    if (!isOther) {
+        customSubject.value = "";
+    }
+});
 
 form.addEventListener("submit", async function(event) {
     event.preventDefault();
 
     //get dropdown
-    const subject = document.getElementById("subject").value;
+    const subject = (
+    subjectSelect.value === "OTHER"
+        ? customSubject.value
+        : subjectSelect.value
+).trim().toUpperCase();
     const number = document.getElementById("course-number").value.trim();
 
     // build api request see courses.js in backend
