@@ -40,11 +40,13 @@ app.use(session({
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts');
 const courseRoutes = require('./routes/courses');
+const profileRoutes = require('./routes/profile')
 
 //register routes
 app.use('/api/auth', authRoutes);
 app.use('/api', postRoutes);
 app.use('/api/courses', courseRoutes);
+app.use("/api/profile", profileRoutes);
 
 
 app.listen(PORT, () => {

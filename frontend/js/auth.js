@@ -6,9 +6,9 @@ async function checkAuth() {
     const userGreeting = document.getElementById("userGreeting");
 
     try {
-        const response = await fetch("https://wayne-state-course-forum.onrender.com/api/auth/me", {
-            credentials: "include"
-        });
+       const response = await fetch("https://wayne-state-course-forum.onrender.com/api/auth/me", {
+          credentials: "include"
+       });
 
         if (response.ok) {
             // Student is logged in
@@ -17,6 +17,12 @@ async function checkAuth() {
             userGreeting.textContent = `Hello ${data.user.email}!`;
             userAccount.hidden = false;
             guestLinks.hidden = true;
+
+            const myProfileLink = document.getElementById("myProfileLink");
+
+            if (myProfileLink && data.user) {
+                myProfileLink.href = `profile.html?userId=${data.user.user_id}`;
+            }
 
         } else if (response.status === 401) {
             // Student is not logged in

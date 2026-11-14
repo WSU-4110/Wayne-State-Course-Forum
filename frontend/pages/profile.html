@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile | WSU Course Forum</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="index.html" class="site-brand">
+                <span class="brand-name">Wayne State University</span>
+                <span class="brand-subtitle">Course Forum</span>
+            </a>
+
+            <nav class="main-navigation">
+                <a href="index.html">Home</a>
+                <a href="search.html">Search Courses</a>
+                <a href="index.html#news">News</a>
+            </nav>
+        </div>
+
+        <nav class="account-navigation">
+            <span id="guestLinks">
+                <a href="login.html">Log In</a>
+                <a href="signup.html" class="signup-button">Sign Up</a>
+            </span>
+
+            <span id="userAccount" hidden>
+                <span id="userGreeting"></span>
+                <a href="profile.html" id="myProfileLink">My Profile</a>
+                <button id="logoutBtn" type="button">Log Out</button>
+            </span>
+        </nav>
+    </header>
+
+    <!-- profile content -->
+    <main class="profile-page">
+
+    <div class="profile-heading">
+        <h1><span id="profileEmail">Student</span>'s Profile</h1>
+
+        <a href="manage_profile.html"
+        id="manageProfileBtn"
+        class="manage-profile-btn"
+        hidden>
+            Manage Profile
+        </a>
+    </div>
+
+    <div class="profile-layout">
+
+        <!-- LEFT COLUMN -->
+        <div class="profile-left">
+
+            <section class="profile-card student-details">
+                <p><strong>Major:</strong> <span id="major"></span></p>
+                <p><strong>Year:</strong> <span id="year"></span></p>
+            </section>
+
+            <section class="profile-card about-me">
+                <h2>About Me</h2>
+                <p id="studentBio"></p>
+            </section>
+
+        </div>
+
+        <!-- MIDDLE COLUMN -->
+        <section class="profile-card post-history">
+            <h2>Post History</h2>
+            <ul id="postList"></ul>
+        </section>
+
+        <!-- RIGHT COLUMN -->
+        <div class="profile-right">
+
+            <section class="profile-card current-enrollments">
+                <h2>Current Enrollments</h2>
+                <ul id="currentEnrollmentList"></ul>
+            </section>
+
+            <section class="profile-card past-enrollments">
+
+                <button id="togglePastEnrollments"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="pastEnrollmentList">
+                    Show Past Enrollments
+                </button>
+
+                <ul id="pastEnrollmentList" hidden></ul>
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Made by WSU students for CSC 4110.</p>
+    </footer>
+
+    
+    <script src="../js/auth.js"></script>
+    <script src="../js/profile.js"></script>
+
+</body>
+</html>
