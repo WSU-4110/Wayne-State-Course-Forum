@@ -38,7 +38,7 @@ loginForm.addEventListener("submit", async function(event) {
             window.location.href = "index.html"; //verified user goes to homepage
         } else if (response.status === 403 && data.requiresVerification){
             // redirect unverfied users to the verification page
-            window.location.href = `verify_email.html?email=${encodeURIComponent(data.email)}`;
+            window.location.href = `verify_email.html?email=${encodeURIComponent(data.email || email)}`;
         }
         else {
             loginMessage.textContent = data.message || "Login failed.";

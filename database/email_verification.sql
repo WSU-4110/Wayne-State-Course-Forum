@@ -1,10 +1,14 @@
-alter table users
-add column in not exists email_verfiied boolean not null default FALSE
 
-create table if not exists email_verfication_codes{
-    user id integer primary key references users(user_id) on delete cascade,
-    code_hash text not null,
-    expires_at TIMESPAMPTZ not null,
-    attempts integer not null default 0,
-    created_at TIMESPAMPTZ not null default NOW()  
-}
+ALTER TABLE users
+ADD COLUMN IF NOT EXISTS email_verified
+BOOLEAN NOT NULL DEFAULT FALSE;
+
+CREATE TABLE IF NOT EXISTS email_verification_codes (
+    user_id INTEGER PRIMARY KEY
+        REFERENCES users(user_id) ON DELETE CASCADE,
+    code_hash TEXT NOT NULL,
+    expires_at TIMESTAMPTZ NOT NULL,
+    attempts INTEGER NOT NULL DEFAULT 0,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+git
