@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Profile | WSU Course Forum</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+        <!-- Navigation Bar -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="index.html" class="site-brand">
+                <span class="brand-name">Wayne State University</span>
+                <span class="brand-subtitle">Course Forum</span>
+            </a>
+
+            <nav class="main-navigation">
+                <a href="index.html">Home</a>
+                <a href="search.html">Search Courses</a>
+                <a href="index.html#news">News</a>
+            </nav>
+        </div>
+
+        <nav class="account-navigation">
+            <span id="guestLinks">
+                <a href="login.html">Log In</a>
+                <a href="signup.html" class="signup-button">Sign Up</a>
+            </span>
+
+            <span id="userAccount" hidden>
+                <span id="userGreeting"></span>
+                <a href="profile.html" id="myProfileLink">My Profile</a>
+                <button id="logoutBtn" type="button">Log Out</button>
+            </span>
+        </nav>
+    </header>
+
+    
+    <main class="manage-profile-page">
+        <h1>Manage Profile</h1>
+
+        <form id="manageProfileForm">
+
+            <h2>Personal Information</h2>
+
+            <label for="major">Major</label>
+            <input type="text" id="major" maxlength="100">
+
+            <label for="year">Year</label>
+            <select id="year">
+                <option value="Freshman">Freshman</option>
+                <option value="Sophomore">Sophomore</option>
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+                <option value="Graduate">Graduate</option>
+            </select>
+
+            <label for="bio">About Me</label>
+            <textarea id="bio" rows="4" maxlength="500"></textarea>
+
+            <h2>Profile Visibility</h2>
+
+            <label>
+                <input type="checkbox" id="showPosts" checked>
+                Show my posts publicly
+            </label>
+
+            <label>
+                <input type="checkbox" id="showEnrollments">
+                Show my enrollments publicly
+            </label>
+
+            <button type="submit">Save Changes</button>
+            <p id="saveMessage"></p>
+
+        </form>
+
+        <section class="manage-enrollments">
+            <h2>My Course Enrollments</h2>
+            <div id="enrollmentList"></div>
+            <button type="button" id="addEnrollmentBtn">
+                + Add Enrollment
+            </button>
+            <form id="enrollmentForm" hidden>
+                <h3>Add Course Enrollment</h3>
+
+                    <label for="courseSubject">Course Subject</label>
+                    <input
+                        type="text"
+                        id="courseSubject"
+                        placeholder="CSC"
+                        maxlength="5"
+                        required
+                    >
+
+                    <label for="courseNumber">Course Number</label>
+                    <input
+                        type="text"
+                        id="courseNumber"
+                        placeholder="4110"
+                        maxlength="4"
+                        pattern="[0-9]{4}"
+                        required
+                    >
+
+                    <p id="courseValidationMessage"></p>
+
+                <label for="semester">Semester</label>
+                <select id="semester" required>
+                    <option value="Fall">Fall</option>
+                    <option value="Winter">Winter</option>
+                    <option value="Spring/Summer">Spring/Summer</option>
+                </select>
+
+                <label for="enrollmentYear">Year</label>
+                <input
+                    type="number"
+                    id="enrollmentYear"
+                    min="2000"
+                    max="2100"
+                    required
+                >
+
+                <label for="enrollmentStatus">Status</label>
+                <select id="enrollmentStatus" required>
+                    <option value="Current">Currently Enrolled</option>
+                    <option value="Past">Completed</option>
+                </select>
+
+                <button type="submit">Save Enrollment</button>
+                <button type="button" id="cancelEnrollmentBtn">Cancel</button>
+
+                <p id="enrollmentMessage"></p>
+            </form>
+        </section>
+    </main>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/manage_profile.js"></script>
+</body>
+</html>
