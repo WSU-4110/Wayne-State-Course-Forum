@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
   <title>Search Courses | WSU Course Forum</title>
   <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
   <!-- Wayne State Course Forum Navigation -->
@@ -43,148 +45,211 @@
     </nav>
   </header>
 
-  <!-- Main part of the page -->
-  <main>
-    <h1>Find a WSU course</h1>
-    <p>Read what other students say about workload, tips, and what to know before you take it.</p>
 
-  <!-- Search bar. Nick's search code will read the "course" value. -->
-  <form id="course-search-form" action="course.html" method="get">
-  <label for="subject">Subject</label>
-  <select id="subject" required>
-    <option value="">Select a subject</option>
-    <option value="OTHER">Other (enter subject)</option>
-  </select>
+  <!-- Search Courses Page -->
+  <main class="search-page">
 
-  <input 
-    type = "text"
-    id = "custom-subject"
-    placeholder = "Enter subject code (e.g. CSC)"
-    maxlength = "3"
-    pattern = "[A-Za-z]{2,3}"
-    hidden
-    >
+    <div class="search-page-layout">
 
+      <!-- LEFT SIDE: Recently Active Courses -->
+      <section id="recently-active" class="recent-courses-panel">
 
-  <label for="course-number">Course Number</label>
-  <input
-    type="text"
-    id="course-number"
-    placeholder="e.g. 4110"
-    inputmode="numeric"
-    pattern="[0-9]+"
-    required
-  >
+        <h2>Recently Active Courses</h2>
 
-  <input type="hidden" id="course-search" name="course">
+        <p class="section-description">
+          See what Wayne State students are discussing!
+        </p>
 
-  <button type="submit">Search</button>
-</form>
+        <div id="recent-courses-grid" class="news-grid">
+          <p>Finding recent courses...</p>
+        </div>
+
+      </section>
 
 
-<script>
-const form = document.getElementById("course-search-form");
-const subjectSelect = document.getElementById("subject");
-const customSubject = document.getElementById("custom-subject");
+      <!-- RIGHT SIDE: Find a WSU Course -->
+      <section class="course-search-panel">
 
-async function loadSubjects() { 
-  try {
+        <h1>Find a WSU course</h1>
+
+        <p class="section-description">
+          Read what other students say about workload,
+          tips, and what to know before you take it.
+        </p>
+
+        <!-- Course Search Form -->
+        <form
+          id="course-search-form"
+          action="course.html"
+          method="get"
+        >
+
+          <label for="subject">Subject</label>
+
+          <select id="subject" required>
+            <option value="">Select a subject</option>
+            <option value="OTHER">Other (enter subject)</option>
+          </select>
+
+          <!-- Custom Subject Input -->
+          <input
+            type="text"
+            id="custom-subject"
+            placeholder="Enter subject code (e.g. CSC)"
+            maxlength="3"
+            pattern="[A-Za-z]{2,3}"
+            hidden
+          >
+
+          <label for="course-number">Course Number</label>
+
+          <input
+            type="text"
+            id="course-number"
+            placeholder="e.g. 4110"
+            inputmode="numeric"
+            pattern="[0-9]+"
+            required
+          >
+
+          <input
+            type="hidden"
+            id="course-search"
+            name="course"
+          >
+
+          <button type="submit">Search</button>
+
+        </form>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>Made by WSU students for CSC 4110.</p>
+  </footer>
+
+
+  <!-- Course Search JavaScript -->
+  <script>
+    const form = document.getElementById("course-search-form");
+    const subjectSelect = document.getElementById("subject");
+    const customSubject = document.getElementById("custom-subject");
+
+    // Load available course subjects from the backend
+    async function loadSubjects() {
+      try {
         const response = await fetch(
-            "https://wayne-state-course-forum.onrender.com/api/courses/subjects"
+          "https://wayne-state-course-forum.onrender.com/api/courses/subjects"
         );
 
         if (!response.ok) {
-            throw new Error("Failed to fetch subjects");
+          throw new Error("Failed to fetch subjects");
         }
 
         const subjects = await response.json();
 
         const otherOption = subjectSelect.querySelector(
-            'option[value="OTHER"]'
+          'option[value="OTHER"]'
         );
 
         subjects.forEach(course => {
-            const option = document.createElement("option");
+          const option = document.createElement("option");
 
-            option.value = course.subject;
-            option.textContent = course.subject;
+          option.value = course.subject;
+          option.textContent = course.subject;
 
-            subjectSelect.insertBefore(option, otherOption);
+          subjectSelect.insertBefore(option, otherOption);
         });
 
-    } catch (error) {
+      } catch (error) {
         console.error("Error loading subjects:", error);
+      }
     }
-}
 
-loadSubjects();
+    loadSubjects();
 
-subjectSelect.addEventListener("change", function() {
-    const isOther = subjectSelect.value === "OTHER";
 
-    customSubject.hidden = !isOther;
-    customSubject.required = isOther;
+    // Show custom subject field when "Other" is selected
+    subjectSelect.addEventListener("change", function() {
+      const isOther = subjectSelect.value === "OTHER";
 
-    if (!isOther) {
+      customSubject.hidden = !isOther;
+      customSubject.required = isOther;
+
+      if (!isOther) {
         customSubject.value = "";
-    }
-});
+      }
+    });
 
-form.addEventListener("submit", async function(event) {
-    event.preventDefault();
 
-    //get dropdown
-    const subject = (
-    subjectSelect.value === "OTHER"
-        ? customSubject.value
-        : subjectSelect.value
-).trim().toUpperCase();
-    const number = document.getElementById("course-number").value.trim();
+    // Validate the selected course before opening its page
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
 
-    // build api request see courses.js in backend
-    const url = new URL(
+      const subject = (
+        subjectSelect.value === "OTHER"
+          ? customSubject.value
+          : subjectSelect.value
+      ).trim().toUpperCase();
+
+      const number = document
+        .getElementById("course-number")
+        .value.trim();
+
+      const url = new URL(
         "https://wayne-state-course-forum.onrender.com/api/courses/validate"
-    );
+      );
 
-    url.searchParams.set("subject", subject);
-    url.searchParams.set("number", number);
+      url.searchParams.set("subject", subject);
+      url.searchParams.set("number", number);
 
-    try {
-        // validates if exists
+      try {
         const response = await fetch(url);
 
         if (!response.ok) {
-            throw new Error("Validation request failed");
+          throw new Error("Validation request failed");
         }
 
         const result = await response.json();
 
         if (result.valid) {
-            // open if exist
-            const params = new URLSearchParams({
-                course: subject + " " + number
-            });
 
-            window.location.href = "course.html?" + params.toString();
+          // Open the selected course discussion page
+          const params = new URLSearchParams({
+            course: subject + " " + number
+          });
+
+          window.location.href =
+            "course.html?" + params.toString();
 
         } else {
-            // Course does not exist
-            alert("Course not found. Please check the course number.");
+          alert(
+            "Course not found. Please check the course number."
+          );
         }
 
-    } catch (error) {
+      } catch (error) {
         console.error("Validation error:", error);
-        alert("Unable to validate course. Please try again.");
-    }
-});
-</script>
+
+        alert(
+          "Unable to validate course. Please try again."
+        );
+      }
+    });
+  </script>
 
 
-  </main>
+  <!-- Shared Authentication JavaScript -->
+  <script src="../js/auth.js"></script>
 
-  <footer>
-    <p>Made by WSU students for CSC 4110.</p>
-  </footer>
-<script src="../js/auth.js"></script>
+  <!-- Recently Active Courses JavaScript -->
+  <script src="../js/recent-courses.js"></script>
+
 </body>
 </html>
