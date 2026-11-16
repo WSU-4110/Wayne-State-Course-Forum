@@ -8,24 +8,38 @@
 </head>
 <body>
 
-  <!-- Top bar: site name + links. Same on every page (issue #9). -->
-  <header>
-    <a href="index.html">WSU Course Forum</a>
-    <nav>
-      <!--when not logged in -->
-    
+  <!-- Wayne State Course Forum Navigation -->
+  <header class="site-header">
+    <div class="header-left">
+
+      <a href="index.html" class="site-brand">
+        <span class="brand-name">Wayne State University</span>
+        <span class="brand-subtitle">Course Forum</span>
+      </a>
+
+      <nav class="main-navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="search.html">Search Courses</a>
+        <a href="index.html#news">News</a>
+      </nav>
+
+    </div>
+
+    <nav class="account-navigation" aria-label="Account">
+
+      <!-- Visible when logged out -->
       <span id="guestLinks">
-            <a href="index.html">Home</a>
-            <a href="login.html">Log in</a>
-            <a href="signup.html">Sign up</a>
+        <a href="login.html">Log In</a>
+        <a href="signup.html" class="signup-button">Sign Up</a>
       </span>
 
-      <!--when logged in-->
+      <!-- Visible when logged in -->
       <span id="userAccount" hidden>
-            <span id="userGreeting"></span>
-            <a href="index.html">Home</a>
-            <button id="logoutBtn" type="button">Log Out</button>
+        <span id="userGreeting"></span>
+        <a href="profile.html" id="myProfileLink">My Profile</a>
+        <button id="logoutBtn" type="button">Log Out</button>
       </span>
+
     </nav>
   </header>
 
@@ -39,11 +53,7 @@
   <label for="subject">Subject</label>
   <select id="subject" required>
     <option value="">Select a subject</option>
-    <option value="CSC">CSC - Computer Science</option>
-    <option value="MAT">MAT - Mathematics</option>
-    <option value="BIO">BIO - Biology</option>
-    <option value="CHM">CHM - Chemistry</option>
-    <option value="PHY">PHY - Physics</option>
+    <option value="OTHER">Other (enter subject)</option>
   </select>
 
   <input 
@@ -76,6 +86,38 @@
 const form = document.getElementById("course-search-form");
 const subjectSelect = document.getElementById("subject");
 const customSubject = document.getElementById("custom-subject");
+
+async function loadSubjects() { 
+  try {
+        const response = await fetch(
+            "https://wayne-state-course-forum.onrender.com/api/courses/subjects"
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch subjects");
+        }
+
+        const subjects = await response.json();
+
+        const otherOption = subjectSelect.querySelector(
+            'option[value="OTHER"]'
+        );
+
+        subjects.forEach(course => {
+            const option = document.createElement("option");
+
+            option.value = course.subject;
+            option.textContent = course.subject;
+
+            subjectSelect.insertBefore(option, otherOption);
+        });
+
+    } catch (error) {
+        console.error("Error loading subjects:", error);
+    }
+}
+
+loadSubjects();
 
 subjectSelect.addEventListener("change", function() {
     const isOther = subjectSelect.value === "OTHER";
