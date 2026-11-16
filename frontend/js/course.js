@@ -48,11 +48,6 @@ async function loadCourseInfo() {
     }
 }
 
-
-
-
-
-// Load posts for the course
 function escapeHtml(str) {
         return String(str)
             .replace(/&/g, "&amp;")
@@ -61,6 +56,7 @@ function escapeHtml(str) {
             .replace(/"/g, "&quot;");
     }
 
+// Load posts for the course
 async function loadPosts() {
     try {
         const res = await fetch(`https://wayne-state-course-forum.onrender.com/api/posts?course=${encodeURIComponent(courseCode)}`); 
@@ -75,10 +71,15 @@ async function loadPosts() {
                             <b>[${escapeHtml(p.tag)}] ${escapeHtml(p.title)}</b>
                             <p>${escapeHtml(p.content)}</p>
                             <small>
-                                ${escapeHtml(p.author_email)} • ${new Date(p.created_at).toLocaleDateString()}
+                                ${escapeHtml(p.author_email)} • 
+                                ${new Date(p.created_at).toLocaleDateString()}
                                 ${isEdited ? " (edited)" : ""}
                             </small>
-                            ${isAuthor ? `<button type="button" class="edit-btn">Edit</button>` : ""}
+                            <div style="margin-top: 8px;">
+                                <button type="button" class="toggle-comments-btn">Comments</button>
+                                ${isAuthor ? `<button type="button" class="edit-btn">Edit</button>` : ""}
+                                ${isAuthor ? `<button type="button" class="delete-btn">Delete</button>` : ""}
+                            </div>
                         </div>
 
                         <div class="post-edit-form" hidden>
@@ -88,12 +89,45 @@ async function loadPosts() {
                             <button type="button" class="save-edit-btn">Save</button>
                             <button type="button" class="cancel-edit-btn">Cancel</button>
                         </div>
+
+                        <div class="comments-section" hidden style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #eee;">
+                            <ul class="comment-list" style="padding-left: 15px; margin-bottom: 10px;"></ul>
+                            <form class="comment-form">
+                                <input type="text" class="comment-input" placeholder="Write a comment..." required />
+                                <button type="submit">Comment</button>
+                            </form>
+                        </div>
                     </li>
                 `;
             }).join("");
         } catch (err) {
             console.error("Failed to load posts:", err);
             list.innerHTML = "<li><p>Unable to load posts at this time.</p></li>";
+        }
+    }
+
+// Load comments for a specific post
+async function loadComments(postId, commentListEl) {
+        commentListEl.innerHTML = "<li>Loading comments...</li>";
+        try {
+            const res = await fetch(`${API_BASE}/posts/${postId}/comments`);
+            if (!res.ok) throw new Error("Failed to fetch comments");
+            const comments = await res.json();
+
+            if (comments.length === 0) {
+                commentListEl.innerHTML = "<li class='no-comments'>No comments yet.</li>";
+                return;
+            }
+
+            commentListEl.innerHTML = comments.map(c => `
+                <li style="margin-bottom: 6px; list-style: disc;">
+                    <small><strong>${escapeHtml(c.author_email)}</strong> (${new Date(c.created_at).toLocaleDateString()}):</small>
+                    <span>${escapeHtml(c.content)}</span>
+                </li>
+            `).join("");
+        } catch (err) {
+            console.error("Error loading comments:", err);
+            commentListEl.innerHTML = "<li>Unable to load comments.</li>";
         }
     }
 
@@ -114,7 +148,8 @@ list.addEventListener("click", async (e) => {
             editDiv.hidden = true;
             viewDiv.hidden = false;
         }
-
+        
+        //toggle save edit button
         if (e.target.classList.contains("save-edit-btn")) {
             const title = postItem.querySelector(".edit-title").value.trim();
             const tag = postItem.querySelector(".edit-tag").value.trim();
@@ -143,8 +178,73 @@ list.addEventListener("click", async (e) => {
                 console.error("Update failed:", err);
             }
         }
+        
+        //toggle delete button
+        if (e.target.classList.contains("delete-btn")) {
+            if (!confirm("Are you sure you want to delete this post?")) return;
+
+            try {
+                const res = await fetch(`${API_BASE}/posts/${postId}`, {
+                    method: "DELETE",
+                    credentials: "include"
+                });
+
+                if (res.ok) {
+                    postItem.remove();
+                } else {
+                    const errData = await res.json();
+                    alert("Error: " + (errData.error || "Could not delete post"));
+                }
+            } catch (err) {
+                console.error("Delete failed:", err);
+            }
+        }
+
+        //toggle comments button
+        if (e.target.classList.contains("toggle-comments-btn")) {
+            const commentsSection = postItem.querySelector(".comments-section");
+            const commentListEl = postItem.querySelector(".comment-list");
+
+            commentsSection.hidden = !commentsSection.hidden;
+            if (!commentsSection.hidden) {
+                await loadComments(postId, commentListEl);
+            }
+        }
     });
 
+//handle comment submission
+list.addEventListener("submit", async (e) => {
+        if (!e.target.classList.contains("comment-form")) return;
+        e.preventDefault();
+
+        const postItem = e.target.closest("li[data-post-id]");
+        const postId = postItem.dataset.postId;
+        const input = e.target.querySelector(".comment-input");
+        const content = input.value.trim();
+        if (!content) return;
+
+        try {
+            const res = await fetch(`${API_BASE}/posts/${postId}/comments`, {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ content })
+            });
+
+            if (res.ok) {
+                input.value = "";
+                const commentListEl = postItem.querySelector(".comment-list");
+                await loadComments(postId, commentListEl);
+            } else {
+                const errData = await res.json();
+                alert("Error: " + (errData.error || "Could not post comment"));
+            }
+        } catch (err) {
+            console.error("Comment submission failed:", err);
+        }
+    });
+
+// Handle new post submission
 if (form) {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
