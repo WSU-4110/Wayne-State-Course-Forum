@@ -176,3 +176,82 @@ router.patch("/posts/:id", async (req, res) => {
     res.status(500).json({ error: "Internal server error." });
   }
 });
+
+// DELETE /api/posts/:id — Delete a post (and cascade-delete its comments)
+router.delete('/:id', authenticateToken, async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.user.id;
+
+  try {
+    // Verify post exists and belongs to the logged-in user
+    const check = await pool.query('SELECT user_id FROM posts WHERE id = $1', [postId]);
+
+    if (check.rows.length === 0) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    if (check.rows[0].user_id !== userId) {
+      return res.status(403).json({ error: 'You can only delete your own posts' });
+    }
+
+    await pool.query('DELETE FROM posts WHERE id = $1', [postId]);
+    res.status(200).json({ message: 'Post deleted', id: postId });
+  } catch (err) {
+    console.error('Delete post error:', err);
+    res.status(500).json({ error: 'Server error while deleting post' });
+  }
+});
+
+// GET /api/posts/:id/comments — Fetch all comments for a post
+router.get('/:id/comments', async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const result = await pool.query(
+      `SELECT c.id, c.content, c.created_at, c.user_id, u.username
+       FROM comments c
+       JOIN users u ON c.user_id = u.id
+       WHERE c.post_id = $1
+       ORDER BY c.created_at ASC`,
+      [postId]
+    );
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error('Fetch comments error:', err);
+    res.status(500).json({ error: 'Server error while loading comments' });
+  }
+});
+
+// POST /api/posts/:id/comments — Create a new comment on a post
+router.post('/:id/comments', authenticateToken, async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.user.id;
+  const { content } = req.body;
+
+  if (!content || !content.trim()) {
+    return res.status(400).json({ error: 'Comment cannot be empty' });
+  }
+
+  try {
+    const insertResult = await pool.query(
+      `INSERT INTO comments (post_id, user_id, content)
+       VALUES ($1, $2, $3)
+       RETURNING id, post_id, user_id, content, created_at`,
+      [postId, userId, content.trim()]
+    );
+
+    // Fetch username so the frontend can immediately render the new comment
+    const userResult = await pool.query('SELECT username FROM users WHERE id = $1', [userId]);
+    const newComment = {
+      ...insertResult.rows[0],
+      username: userResult.rows[0]?.username || 'Unknown'
+    };
+
+    res.status(201).json(newComment);
+  } catch (err) {
+    if (err.code === '23503') {
+      return res.status(404).json({ error: 'Post no longer exists' });
+    }
+    console.error('Create comment error:', err);
+    res.status(500).json({ error: 'Server error while posting comment' });
+  }
+});
