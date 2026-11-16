@@ -39,11 +39,7 @@
   <label for="subject">Subject</label>
   <select id="subject" required>
     <option value="">Select a subject</option>
-    <option value="CSC">CSC - Computer Science</option>
-    <option value="MAT">MAT - Mathematics</option>
-    <option value="BIO">BIO - Biology</option>
-    <option value="CHM">CHM - Chemistry</option>
-    <option value="PHY">PHY - Physics</option>
+    <option value="OTHER">Other (enter subject)</option>
   </select>
 
   <input 
@@ -76,6 +72,38 @@
 const form = document.getElementById("course-search-form");
 const subjectSelect = document.getElementById("subject");
 const customSubject = document.getElementById("custom-subject");
+
+async function loadSubjects() { 
+  try {
+        const response = await fetch(
+            "https://wayne-state-course-forum.onrender.com/api/courses/subjects"
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch subjects");
+        }
+
+        const subjects = await response.json();
+
+        const otherOption = subjectSelect.querySelector(
+            'option[value="OTHER"]'
+        );
+
+        subjects.forEach(course => {
+            const option = document.createElement("option");
+
+            option.value = course.subject;
+            option.textContent = course.subject;
+
+            subjectSelect.insertBefore(option, otherOption);
+        });
+
+    } catch (error) {
+        console.error("Error loading subjects:", error);
+    }
+}
+
+loadSubjects();
 
 subjectSelect.addEventListener("change", function() {
     const isOther = subjectSelect.value === "OTHER";
