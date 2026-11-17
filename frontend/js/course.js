@@ -2,6 +2,9 @@
 const params = new URLSearchParams(window.location.search);
 const courseCode = (params.get("course") || "").trim().toUpperCase();
 
+// Base URL for the API
+const API_BASE = "https://wayne-state-course-forum.onrender.com/api";
+
 // Get references to the post list and form elements
 const list = document.getElementById("post-list");
 const form = document.getElementById("post-form");
